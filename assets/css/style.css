@@ -1,0 +1,40 @@
+.display-4, 
+.lead {
+    text-align: center;
+}
+
+.card-header {
+    background-color: gray;
+    color: whitesmoke;
+}
+
+#current-time {
+    text-align: right;
+}
+
+.input-time {
+    width: 10%;
+    float: left;
+}
+
+.card {
+    margin: 10px;
+}
+
+th {
+    
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid gray;
+    border-top: 1px solid lightgray;
+}
+table {
+    
+    width: 100%;
+
+}
+td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid lightgray;
+}
