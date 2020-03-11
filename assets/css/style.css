@@ -1,3 +1,10 @@
+.jumbotron-fluid{
+    background-image: url("../images/train_bkg.jpeg");
+    background-size: cover;
+    color:whitesmoke;
+}
+
+
 .display-4, 
 .lead {
     text-align: center;
