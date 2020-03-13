@@ -3,6 +3,30 @@ HW#7 Firebase
 
 Firebase Assignment - Train Scheduler (Basic - Recommended)
 
+//latest version of the app is functioning with minimum requirements: 
+    //create a train schedule application that incorporates Firebase to host arrival and departure data.
+    //Your app will retrieve and manipulate this information with Moment.js
+    //This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station
+
+    // Make sure that your app suits this basic spec:
+    // When adding trains, administrators should be able to submit the following:
+        // Train Name
+        // Destination
+        // First Train Time -- in military time
+        // Frequency -- in minutes
+    // Code this app to calculate when the next train will arrive; this should be relative to the current time.
+    // Users from many different machines must be able to view same train times.
+    // Styling and theme are completely up to you. Get Creative!
+
+// Plus the following bonus tasks:
+    // 1. includes the local current time displayed on the train timetable
+    // 2. updates the timetable "minutes to arrival" and "next train time" text once every minute. 
+    // 3. added a delete button to each row that when clicked, removes the node from firebase database and re-renders the timetable
+    // 4. added form at bottom to edit train name, destination, start time information, and frequency to the database
+
+
+/////////////////////////////////////////////////////////////
+
 Overview
 In this assignment, you'll create a train schedule application that incorporates Firebase to host arrival and departure data. Your app will retrieve and manipulate this information with Moment.js. This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station.
 

@@ -1,30 +1,10 @@
-//this version is the app functioning with minimum requirements: 
-    //create a train schedule application that incorporates Firebase to host arrival and departure data.
-    //Your app will retrieve and manipulate this information with Moment.js
-    //This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station
 
-// Make sure that your app suits this basic spec:
-  // When adding trains, administrators should be able to submit the following:
-      // Train Name
-      // Destination
-      // First Train Time -- in military time
-      // Frequency -- in minutes
-  // Code this app to calculate when the next train will arrive; this should be relative to the current time.
-  // Users from many different machines must be able to view same train times.
-  // Styling and theme are completely up to you. Get Creative!
+// next iteration to do??
 
-
-// Plus the following bonus tasks:
-    // 1. includes the local current time displayed on the train timetable
-    // 2. updates the timetable "minutes to arrival" and "next train time" text once every minute. 
-    // 3. added a delete button to each row that when clicked, removes the node from firebase database and re-renders the timetable
-
-
-// next iteration to do:
-    // put current time into a div and display in same header as "Current Train Schedule"
     // change form factor of delete button and add hover features
-    // attempting to add edit features
-    // need to prevent empty submit button click 
+    //fix the time threshold - only display next arrival time to between the start time and midnight??
+
+    //Google and GitHub Authentication??
 
 
 $(document).ready(function () {
@@ -60,39 +40,47 @@ $(document).ready(function () {
     // Button for adding train schedules
     $("#add-train").on("click", function(event) {
         event.preventDefault();
-          
-        // Grabs user input
-        var trainName = $("#input-name").val().trim();
-        var destination = $("#input-destination").val().trim();
-        var hour =  $("#input-first-time-hour").val().trim();
-        var minutes =  $("#input-first-time-minute").val().trim();
-        var sHour = hour.toString();
-        var sMinutes = minutes.toString();
-        var firstTrainTime = (sHour + ":" + sMinutes);
-        var frequency = $("#input-frequency").val().trim();
 
-        //Uploads train data to the database including the document id thats randomly generated and assigned on the push of data
-        var autoID =  database.ref().push().key
+        trainNameInput = $("#input-name").val();
+        destinationInput = $("#input-destination").val();
+        hourInput = $("#input-first-time-hour").val();
+        minutesInput = $("#input-first-time-minute").val();
+        frequencyInput = $("#input-frequency").val();
 
-        database.ref().child(autoID).set({
-            name: trainName,
-            destination: destination,
-            firstTrainTime: firstTrainTime,
-            frequency: frequency,
-            // currentTimeFormatted: currentTimeFormatted,
-            autoID: autoID
-        })
-          
-        alert("Train schedule successfully added");  
-          
-        // Clears all of the text-boxes
-        $("#input-name").val("");
-        $("#input-destination").val("");
-        $("#input-first-time-hour").val("");
-        $("#input-first-time-minute").val("");
-        $("#input-frequency").val("");
-        
-        updateTimetable();
+        //only allows entry if there is something in each field  
+        if (trainNameInput && destinationInput && hourInput && minutesInput && frequencyInput) {
+            // Grabs user input
+            var trainName = $("#input-name").val().trim();
+            var destination = $("#input-destination").val().trim();
+            var hour = $("#input-first-time-hour").val().trim();
+            var minutes = $("#input-first-time-minute").val().trim();
+            var sHour = hour.toString();
+            var sMinutes = minutes.toString();
+            var firstTrainTime = (sHour + ":" + sMinutes);
+            var frequency = $("#input-frequency").val().trim();
+
+            //Uploads train data to the database including the document id thats randomly generated and assigned on the push of data
+            var autoID =  database.ref().push().key
+
+            database.ref().child(autoID).set({
+                name: trainName,
+                destination: destination,
+                firstTrainTime: firstTrainTime,
+                frequency: frequency,
+                autoID: autoID
+            })
+            
+            // alert("Train schedule successfully added");  
+            
+            // Clears all of the text-boxes
+            $("#input-name").val("");
+            $("#input-destination").val("");
+            $("#input-first-time-hour").val("");
+            $("#input-first-time-minute").val("");
+            $("#input-frequency").val("");
+            
+            updateTimetable();
+        }
     });
         
         /////////// Functions //////////////////////
@@ -115,13 +103,24 @@ $(document).ready(function () {
         for (var i = rowCount - 1; i > 0; i--) {
             currentSchedule.deleteRow(i);
         }
+        
+        $(".input-name-current").empty();
+
     }
         
     //to update timetable every minute or when new train schedules are added
     function updateTimetable() {
         
         DeleteRows();
-        
+
+        //adding an initial dropdown option with instructions
+        var editContentOptionBlank = $("<option></option>");
+                editContentOptionBlank.attr('value', "Select Train Schedule to Edit");
+                editContentOptionBlank.text("Select Train Schedule to Edit");
+
+            $(".input-name-current").append(editContentOptionBlank);
+
+
         database.ref().on("child_added", function(childSnapshot) {
 
             // Store everything into a variable.
@@ -131,11 +130,18 @@ $(document).ready(function () {
             var frequency = childSnapshot.val().frequency;
 
             var id  = childSnapshot.val().autoID;
-            // console.log(id);
 
             //creating the buttons to be added to each row
-            var editButton = $("<button id='editButton'>Edit</button>");
             var deleteButton = $("<button id='deleteButton'>Delete</button>");
+
+            var editContentOption = $("<option></option>");
+                editContentOption.attr('label', trainName);
+                editContentOption.attr('value', trainName);
+                editContentOption.attr('data-selected', trainName);
+                editContentOption.text(trainName);
+                editContentOption.attr('data-id-delete', id);
+
+            $(".input-name-current").append(editContentOption);
 
             //add a data attribute containing the 'document id' (the auto generated number for each row)
             deleteButton.attr('data-id-delete', id);
@@ -163,7 +169,6 @@ $(document).ready(function () {
             $("<td>").text(frequency),
             $("<td id='next-train'>").text(nextTrainFormatted),
             $("<td id='minutes-away'>").text(tMinutesTillTrain),
-            $("<td id='editButton'>").html(editButton),
             $("<td>").html(deleteButton),
             );
         
@@ -176,23 +181,75 @@ $(document).ready(function () {
     //on click function for the delete button to delete the node in the database and re-render the timetable
     $(document).on('click', '#deleteButton', function () {
 
-       buttonValue = $(this).attr("data-id-delete");
-    //    console.log(buttonValue);  
+       buttonValue = $(this).attr("data-id-delete"); 
        
        database.ref().child(buttonValue).remove();
     
         updateTimetable();
     });   
 
-});
+    //to capture id of dropdown option selected and storing the id to the edit button for each time it's selected
+    $('select.input-name-current').change(function() {
+        var editButtonValue = $('select.input-name-current').find(':selected').attr('data-id-delete');
+        console.log(editButtonValue); 
+        $(".edit-train-button").attr("id", editButtonValue);
+    });
 
-        
-// Bonus (Extra Challenges)
-        
-// Try adding an update button for each train. Let the user edit the row's 
-//elements-- allow them to change a train's Name, Destination and Arrival Time (and then, 
-//by relation, minutes to arrival).
-        
-// As a final challenge, make it so that only users who log into the site with their Google 
-//or GitHub accounts can use your site. You'll need to read up on Firebase authentication 
-//for this bonus exercise.
+    //for whatever dropdown option is selected, the edit button id will match the node id and use 
+    $(".edit-train-button").on("click", function(event) {
+        event.preventDefault(); 
+
+        var selectedOption = $(this).attr("id");
+        console.log(selectedOption);
+
+        var newTrainName = $("#input-name-edit").val().trim();
+        newTrainNameInput = $("#input-name-edit").val();
+
+        var newDestination = $("#input-destination-edit").val().trim();
+        newDestinationInput = $("#input-destination-edit").val()
+
+        var newHour = $("#input-first-time-hour-edit").val().trim();
+        var newMinutes = $("#input-first-time-minute-edit").val().trim();
+        var newSHour = newHour.toString();
+        var newSMinutes = newMinutes.toString();
+        var newFirstTrainTime = (newSHour + ":" + newSMinutes);
+        newHourInput = $("#input-first-time-hour-edit").val();
+        newMinutesInput = $("#input-first-time-minute-edit").val();
+
+        var newFrequency = $("#input-frequency-edit").val().trim();
+        newFrequencyInput = $("#input-frequency-edit").val();
+
+        if (newTrainNameInput) {
+            database.ref().child(selectedOption).update({
+                "name": newTrainName
+            });
+        updateTimetable();
+        }
+        if (newDestinationInput) {
+            database.ref().child(selectedOption).update({
+                "destination": newDestination
+            });
+        updateTimetable();
+        }  
+        if (newHourInput && newMinutesInput) {
+            database.ref().child(selectedOption).update({
+                "firstTrainTime": newFirstTrainTime
+            });
+        updateTimetable();
+        }   
+        if (newFrequencyInput) {
+            database.ref().child(selectedOption).update({
+                "frequency": newFrequency
+            });
+        updateTimetable();
+        }  
+
+        $("#input-name-edit").val("");
+        $("#input-destination-edit").val("");
+        $("#input-first-time-hour-edit").val("");
+        $("#input-first-time-minute-edit").val("");
+        $("#input-frequency-edit").val("");
+
+     }); 
+
+});

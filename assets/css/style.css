@@ -13,10 +13,13 @@
 .card-header {
     background-color: gray;
     color: whitesmoke;
+    float: left;
+    border-bottom: none;
 }
 
 #current-time {
     text-align: right;
+    float: right;
 }
 
 .input-time {
@@ -58,4 +61,8 @@ td {
     background-color: white;
     color: black;
    
+}
+
+.input-time {
+    margin: 5px;
 }
