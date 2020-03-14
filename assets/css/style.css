@@ -1,9 +1,26 @@
 .jumbotron-fluid{
-    background-image: url("../images/train_bkg.jpeg");
+    background-image: url("../images/train_bkg1.jpeg");
     background-size: cover;
-    color:whitesmoke;
 }
 
+body {
+    background-color: silver;
+}
+
+.display-4 {
+    font-weight: bold;
+    font-size: 600%;
+    font-family: Impact, 'Arial Narrow Bold', sans-serif;
+    padding: 10px;
+    color: rgb(15, 81, 156);
+    text-shadow: 2px 2px whitesmoke;
+}
+
+.lead {
+    font-size: 200%;
+    font-family: cursive;
+    color: whitesmoke;
+}
 
 .display-4, 
 .lead {
@@ -11,10 +28,12 @@
 }
 
 .card-header {
-    background-color: gray;
+    background-color: rgb(15, 81, 156);
     color: whitesmoke;
     float: left;
     border-bottom: none;
+    font-weight: 600;
+    font-size: large;
 }
 
 #current-time {
@@ -29,6 +48,7 @@
 
 .card {
     margin: 10px;
+    min-width: 540px;
 }
 
 th {
@@ -38,11 +58,11 @@ th {
     border-bottom: 2px solid gray;
     border-top: 1px solid lightgray;
 }
-table {
-    
-    width: 100%;
 
+tbody {
+    width: 100%;
 }
+
 td {
     text-align: center;
     padding: 10px;
@@ -60,7 +80,6 @@ td {
 #current-schedule-header {
     background-color: white;
     color: black;
-   
 }
 
 .input-time {
