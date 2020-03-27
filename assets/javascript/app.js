@@ -38,8 +38,12 @@ $(document).ready(function () {
         minutesInput = $("#input-first-time-minute").val();
         frequencyInput = $("#input-frequency").val();
 
+        if (frequencyInput < 0) {
+            alert("please enter a valid number")
+        }
+
         //only allows entry if there is something in each field  
-        if (trainNameInput && destinationInput && hourInput && minutesInput && frequencyInput) {
+        if (trainNameInput && destinationInput && hourInput && minutesInput && frequencyInput && (frequencyInput >=0)) {
             // Grabs user input
             var trainName = $("#input-name").val().trim();
             var destination = $("#input-destination").val().trim();
@@ -218,7 +222,7 @@ $(document).ready(function () {
                 "firstTrainTime": newFirstTrainTime
             });
         }
-        if (newFrequencyInput) {
+        if (newFrequencyInput && (newFrequencyInput >=0)) {
             database.ref().child(selectedOption).update({
                 "frequency": newFrequency
             });

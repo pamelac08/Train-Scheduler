@@ -1,67 +1,28 @@
-# Train-Scheduler
-HW#7 Firebase
-
-Firebase Assignment - Train Scheduler (Basic - Recommended)
-
-//latest version of the app is functioning with minimum requirements: 
-    //create a train schedule application that incorporates Firebase to host arrival and departure data.
-    //Your app will retrieve and manipulate this information with Moment.js
-    //This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station
-
-    // Make sure that your app suits this basic spec:
-    // When adding trains, administrators should be able to submit the following:
-        // Train Name
-        // Destination
-        // First Train Time -- in military time
-        // Frequency -- in minutes
-    // Code this app to calculate when the next train will arrive; this should be relative to the current time.
-    // Users from many different machines must be able to view same train times.
-    // Styling and theme are completely up to you. Get Creative!
-
-// Plus the following bonus tasks:
-    // 1. includes the local current time displayed on the train timetable
-    // 2. updates the timetable "minutes to arrival" and "next train time" text once every minute. 
-    // 3. added a delete button to each row that when clicked, removes the node from firebase database and re-renders the timetable
-    // 4. added form at bottom to edit train name, destination, start time information, and frequency to the database
+# Train Scheduler
+Coding Boot-camp Homework #7: Intro to Firebase
 
 
-/////////////////////////////////////////////////////////////
-
-Overview
-In this assignment, you'll create a train schedule application that incorporates Firebase to host arrival and departure data. Your app will retrieve and manipulate this information with Moment.js. This website will provide up-to-date information about various trains, namely their arrival times and how many minutes remain until they arrive at their station.
-
-Setup
-We'll leave that up to you -- however you like. Just make sure you're using Firebase to store data, GitHub to backup your project, and GitHub Pages to host your finished site.
-
-
-Instructions
-Make sure that your app suits this basic spec:
-
-When adding trains, administrators should be able to submit the following:
-
-Train Name
-
-Destination
-
-First Train Time -- in military time
-
-Frequency -- in minutes
-
-Code this app to calculate when the next train will arrive; this should be relative to the current time.
-
-Users from many different machines must be able to view same train times.
-
-Styling and theme are completely up to you. Get Creative!
+### Deployed via Git Hub Pages:
+https://pamelac08.github.io/Train-Scheduler/
 
 
 
-Bonus (Extra Challenges)
-Consider updating your "minutes to arrival" and "next train time" text once every minute. This is significantly more challenging; only attempt this if you've completed the actual activity and committed it somewhere on GitHub for safekeeping (and maybe create a second GitHub repo).
+### Project Description:
 
-Try adding update and remove buttons for each train. Let the user edit the row's elements-- allow them to change a train's Name, Destination and Arrival Time (and then, by relation, minutes to arrival).
+This project is a train schedule application that incorporates Firebase to host arrival and departure data and retrieves/manipulates this information with Moment.js
 
-As a final challenge, make it so that only users who log into the site with their Google or GitHub accounts can use your site. You'll need to read up on Firebase authentication for this bonus exercise.
+* This website provides up-to-date information about various trains - displaying their arrival times and how many minutes remain until the train arrives
+* this application is from the perspective of an administrator with the ability to add train schedules with: train name, destination, first train time (in military time), and frequency (in minutes)
+* the application will display the train name, destination, frequency, next arrival time, and how many minutes away the next train is relative to the current time 
+* the application updates the train information on the webpage every minute automatically with the current local time displayed on the train schedule
+* the application also allows the administrator to update existing train schedule information which updates the firebase database plus the ability to delete an existing train schedule from the displayed table on the webpage
 
+(future updates: arrange table in alphabetical order when updated)
+
+
+### Primarily used: 
+
+Firebase Database to store data, moment.js, timers, click event listeners, conditional statements, and for loops to update table
 
 
 
